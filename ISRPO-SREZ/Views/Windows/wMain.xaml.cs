@@ -155,8 +155,8 @@ namespace ISRPO_SREZ
             }
 
             ExcelHelper excelHelper = new ExcelHelper();
-
-            await excelHelper.Write();
+            DataTable dataTable = GetDataTable();
+            await excelHelper.Write(dataTable, new string[] {"Дата продажи", "Клиент", "Количество",  "Цена", "Сумма"}, savedialog.FileName);
         }
 
         private System.Data.DataTable GetDataTable()
