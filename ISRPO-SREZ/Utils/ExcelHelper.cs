@@ -32,7 +32,7 @@ namespace ISRPO_SREZ.Utils
             Marshal.ReleaseComObject(application);
         }
 
-        public async Task Write(DataTable dataTable, string[] columns, string path)
+        public async Task Write(DataTable dataTable, string[] columns, string path, DateTime start, DateTime end, double summ)
         {
             try
             {
@@ -43,16 +43,19 @@ namespace ISRPO_SREZ.Utils
                 workbook = application.Workbooks.Add();
                 sheets = workbook.ActiveSheet;
 
+                sheets.Cells[1, 1] = $"Отчет по продажам за период от {start.ToShortDateString()} до {end.ToShortDateString()}";
+
+
                 Parallel.Invoke(() =>
                 {
                     Parallel.For(1, dataTable.Columns.Count + 1, (int j) =>
                     {
-                        sheets.Cells[1, j] = columns[j - 1];
+                        sheets.Cells[3, j] = columns[j - 1];
                     });
                 },
                 () =>
                 {
-                    Parallel.For(2, dataTable.Rows.Count + 2, (int i) =>
+                    Parallel.For(4, dataTable.Rows.Count + 2, (int i) =>
                     {
                         Parallel.For(1, dataTable.Columns.Count + 1, (int j) =>
                         {
@@ -61,24 +64,7 @@ namespace ISRPO_SREZ.Utils
                     });
                 });
 
-                Excel.Range Range = sheets.UsedRange;
-                Range.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
-                Range.Cells.HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft;
-
-                Excel.ChartObjects chartObjs = (Excel.ChartObjects)sheets.ChartObjects();
-                Excel.ChartObject chartObj = chartObjs.Add(1500, 10, 300, 200);
-                Excel.Chart xlChart = chartObj.Chart;
-                //Range = sheets.Range[$"M1:N{dataTable.Rows.Count + 1}"];
-
-                Excel.SeriesCollection seriesCollection = (Excel.SeriesCollection)xlChart.SeriesCollection(Type.Missing);
-                Excel.Series series = seriesCollection.NewSeries();
-                series.XValues = sheets.get_Range("B2", $"B{dataTable.Columns.Count}");
-                series.Values = sheets.get_Range("N2", $"N{dataTable.Rows.Count + 1}");
-
-                xlChart.ChartType = Excel.XlChartType.xlLine;
-                series.Name = "Зарплата";
-                //xlChart.SetSourceData(Range);
-                xlChart.HasLegend = true;
+                sheets.Cells[dataTable.Rows.Count + 2, dataTable.Columns.Count] = $"Итого {summ}";
 
                 sheets.Columns.AutoFit();
 
@@ -89,7 +75,7 @@ namespace ISRPO_SREZ.Utils
                 workbook.Close(false);
                 CloseExcelFile();
 
-                MessageBox.Show($"Файл успешно сохранён!\nВремя затраченное на выполнение алгоритма - {stopwatch.Elapsed.TotalSeconds}", "Результат");
+                MessageBox.Show($"Файл успешно сохранён!", "Результат");
             }
             catch (Exception ex)
             {

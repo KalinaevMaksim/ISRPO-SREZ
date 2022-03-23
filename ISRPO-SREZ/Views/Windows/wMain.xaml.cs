@@ -49,11 +49,17 @@ namespace ISRPO_SREZ
         {
             DataContext = null;
             DataContext = this;
+            CreateDiagram();
         }
 
         private void CmbSourceDiagramm_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (CmbSourceDiagramm.SelectedIndex <= 0 || Sales == null)
+            CreateDiagram();
+        }
+
+        private void CreateDiagram()
+        {
+            if (CmbSourceDiagramm.SelectedIndex < 0 || Sales == null)
             {
                 return;
             }
@@ -139,7 +145,7 @@ namespace ISRPO_SREZ
 
         private async void BtnExcelReport_Click(object sender, RoutedEventArgs e)
         {
-            if (LstVSales.SelectedItem == null)
+            if(Sales == null || Sales.Count == 0)
             {
                 return;
             }
@@ -156,7 +162,7 @@ namespace ISRPO_SREZ
 
             ExcelHelper excelHelper = new ExcelHelper();
             DataTable dataTable = GetDataTable();
-            await excelHelper.Write(dataTable, new string[] {"Дата продажи", "Клиент", "Количество",  "Цена", "Сумма"}, savedialog.FileName);
+            await excelHelper.Write(dataTable, new string[] { "Дата продажи", "Клиент", "Количество", "Цена", "Сумма" }, savedialog.FileName, DateBegin, DateEnd, Sales.SelectMany(s => s.telephones).Sum(tel => tel.cost * tel.count));
         }
 
         private System.Data.DataTable GetDataTable()
@@ -164,21 +170,25 @@ namespace ISRPO_SREZ
             System.Data.DataTable dataTable = new System.Data.DataTable();
             DataRow dataRow;
 
-            dataTable.Columns.AddRange(new DataColumn[5]);
+            for (int i = 0; i < 5; i++)
+            {
+                dataTable.Columns.Add(new DataColumn());
+            }
 
             foreach (var sale in Sales)
             {
                 foreach (var tel in sale.telephones)
                 {
                     dataRow = dataTable.NewRow();
-                    dataRow.ItemArray = new string[5]
+                    string[] vs = (new List<string>
                     {
                         sale.dateSale.ToString(),
                         sale.client.Initials.ToString(),
                         tel.count.ToString(),
                         tel.cost.ToString(),
                         (tel.cost * tel.count).ToString(),
-                    };
+                    }).ToArray();
+                    dataRow.ItemArray = vs;
                     dataTable.Rows.Add(dataRow);
                 }
             }
