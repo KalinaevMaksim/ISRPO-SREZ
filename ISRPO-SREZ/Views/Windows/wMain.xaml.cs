@@ -1,5 +1,6 @@
 ﻿using ISRPO_SREZ.Models;
 using ISRPO_SREZ.Utils;
+using Mail.Utils;
 using MailXamarin.Utils;
 using Microsoft.Win32;
 using System;
@@ -35,14 +36,21 @@ namespace ISRPO_SREZ
 
         private async void BtnGetData_Click(object sender, RoutedEventArgs e)
         {
-            if (DateBegin.Date == null || DateEnd.Date == null)
+            try
             {
-                throw new Exception("Заполните даты начала и окончания");
-            }
+                if (DateBegin.Date == null || DateEnd.Date == null)
+                {
+                    throw new Exception("Заполните даты начала и окончания");
+                }
 
-            string resultJson = await ServerRequestManager.Send("api/Sale", HttpMethod.Post, DateBegin.Date, DateEnd.Date);
-            Sales = JsonSerializer.Deserialize<List<Sales>>(resultJson);
-            RefreshView();
+                string resultJson = await ServerRequestManager.Send("api/Sale", HttpMethod.Post, DateBegin.Date, DateEnd.Date);
+                Sales = JsonSerializer.Deserialize<List<Sales>>(resultJson);
+                RefreshView();
+            }
+            catch (Exception ex)
+            {
+                MessageShower.ShowError(ex.Message);
+            }
         }
 
         private void RefreshView()
@@ -145,7 +153,7 @@ namespace ISRPO_SREZ
 
         private async void BtnExcelReport_Click(object sender, RoutedEventArgs e)
         {
-            if(Sales == null || Sales.Count == 0)
+            if (Sales == null || Sales.Count == 0)
             {
                 return;
             }
