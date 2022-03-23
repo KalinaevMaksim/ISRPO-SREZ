@@ -28,7 +28,7 @@ namespace ISRPO_SREZ.Utils
         {
             word.Bookmarks bookmarks = null;
 
-            string source = $@"{Directory.GetCurrentDirectory()}/Шаблон отчёта.docx";
+            string source = $@"{Directory.GetCurrentDirectory()}";
             doc = app.Documents.Open(source);
             doc.Activate();
             bookmarks = doc.Bookmarks;
