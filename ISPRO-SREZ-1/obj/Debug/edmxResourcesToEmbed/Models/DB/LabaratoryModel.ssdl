@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище LabaratoryModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="InsuranceCompany">
+    <Key>
+      <PropertyRef Name="InsuranceCompanyID" />
+    </Key>
+    <Property Name="InsuranceCompanyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InsuranceName" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="insuranceAddress" Type="nvarchar" MaxLength="512" Nullable="false" />
+    <Property Name="insuranceInn" Type="int" Nullable="false" />
+    <Property Name="IPAdress" Type="nvarchar" MaxLength="16" Nullable="false" />
+    <Property Name="InsurancePC" Type="int" Nullable="false" />
+    <Property Name="InsuranceBik" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="OrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProvideServiceID" Type="int" />
+    <Property Name="ServiceID" Type="int" />
+    <Property Name="Result" Type="float" Nullable="false" />
+    <Property Name="Finished" Type="timestamp" StoreGeneratedPattern="Computed" />
+    <Property Name="Accepted" Type="bit" Nullable="false" />
+    <Property Name="Status" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Analyzer" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="UserID" Type="int" />
+  </EntityType>
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="PatientID" />
+    </Key>
+    <Property Name="PatientID" Type="int" Nullable="false" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Login" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="GUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="SocialSecNumber" Type="int" Nullable="false" />
+    <Property Name="Ein" Type="nvarchar" MaxLength="32" Nullable="false" />
+    <Property Name="SocialType" Type="nvarchar" MaxLength="4" Nullable="false" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="32" Nullable="false" />
+    <Property Name="PassportSerie" Type="nvarchar" MaxLength="4" Nullable="false" />
+    <Property Name="PassportNumber" Type="nvarchar" MaxLength="6" Nullable="false" />
+    <Property Name="Birthdate" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+    <Property Name="Country" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="UserAgent" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="InsuranceCompanyID" Type="int" />
+  </EntityType>
+  <EntityType Name="ProvideService">
+    <Key>
+      <PropertyRef Name="ProvideServiceID" />
+    </Key>
+    <Property Name="ProvideServiceID" Type="int" Nullable="false" />
+    <Property Name="PatientID" Type="int" Nullable="false" />
+    <Property Name="BarCode" Type="int" Nullable="false" />
+    <Property Name="Date" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Service">
+    <Key>
+      <PropertyRef Name="ServiceID" />
+    </Key>
+    <Property Name="ServiceID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Cost" Type="money" Nullable="false" />
+    <Property Name="DateExpire" Type="date" />
+    <Property Name="AverageDeviation" Type="float" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="256" />
+    <Property Name="Login" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="IPAdress" Type="nvarchar" MaxLength="16" />
+    <Property Name="LastEnter" Type="datetime" />
+    <Property Name="Type" Type="int" Nullable="false" />
+    <Property Name="Photo" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK__Order__ProvideSe__403A8C7D">
+    <End Role="ProvideService" Type="Self.ProvideService" Multiplicity="0..1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProvideService">
+        <PropertyRef Name="ProvideServiceID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="ProvideServiceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Order__ServiceID__412EB0B6">
+    <End Role="Service" Type="Self.Service" Multiplicity="0..1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Service">
+        <PropertyRef Name="ServiceID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="ServiceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Order__UserID__4222D4EF">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Patient__Insuran__3A81B327">
+    <End Role="InsuranceCompany" Type="Self.InsuranceCompany" Multiplicity="0..1" />
+    <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InsuranceCompany">
+        <PropertyRef Name="InsuranceCompanyID" />
+      </Principal>
+      <Dependent Role="Patient">
+        <PropertyRef Name="InsuranceCompanyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ProvideSe__Patie__3D5E1FD2">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+    <End Role="ProvideService" Type="Self.ProvideService" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="PatientID" />
+      </Principal>
+      <Dependent Role="ProvideService">
+        <PropertyRef Name="PatientID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище LabaratoryModelContainer">
+    <EntitySet Name="InsuranceCompany" EntityType="Self.InsuranceCompany" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProvideService" EntityType="Self.ProvideService" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Service" EntityType="Self.Service" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Order__ProvideSe__403A8C7D" Association="Self.FK__Order__ProvideSe__403A8C7D">
+      <End Role="ProvideService" EntitySet="ProvideService" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Order__ServiceID__412EB0B6" Association="Self.FK__Order__ServiceID__412EB0B6">
+      <End Role="Service" EntitySet="Service" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Order__UserID__4222D4EF" Association="Self.FK__Order__UserID__4222D4EF">
+      <End Role="User" EntitySet="User" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Patient__Insuran__3A81B327" Association="Self.FK__Patient__Insuran__3A81B327">
+      <End Role="InsuranceCompany" EntitySet="InsuranceCompany" />
+      <End Role="Patient" EntitySet="Patient" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ProvideSe__Patie__3D5E1FD2" Association="Self.FK__ProvideSe__Patie__3D5E1FD2">
+      <End Role="Patient" EntitySet="Patient" />
+      <End Role="ProvideService" EntitySet="ProvideService" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

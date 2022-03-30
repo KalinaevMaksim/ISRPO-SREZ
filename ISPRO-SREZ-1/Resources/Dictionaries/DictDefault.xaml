@@ -1,0 +1,40 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <FontFamily x:Key="FntGeneral">Comic Sans MS</FontFamily>
+    
+    <SolidColorBrush x:Key="ClrGeneral" Color="#ffffff"/>
+    <SolidColorBrush x:Key="ClrAdditional" Color="#FF76E383"/>
+    <SolidColorBrush x:Key="ClrAccent" Color="#FF498C51"/>
+
+    <Style TargetType="Window">
+        <Setter Property="FontFamily" Value="{StaticResource FntGeneral}"/>
+    </Style>
+
+    <Style TargetType="Image">
+        <Setter Property="RenderOptions.BitmapScalingMode" Value="Fant"/>
+        <Setter Property="Stretch" Value="Uniform"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+    </Style>
+    
+    <Style TargetType="Label">
+        <Setter Property="FontSize" Value="24"/>
+        <Setter Property="FontFamily" Value="{StaticResource FntGeneral}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+    </Style>
+
+    <Style TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource FntGeneral}"/>
+    </Style>
+
+    <Style TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource ClrAdditional}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FntGeneral}"/>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource ClrAccent}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

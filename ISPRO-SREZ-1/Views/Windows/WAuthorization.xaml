@@ -1,0 +1,62 @@
+﻿<Window x:Class="SREZ_1.Views.Windows.WAuthorization"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SREZ_1.Views.Windows"
+        mc:Ignorable="d"
+        Loaded="Window_Loaded"
+        Title="Авторизация" Height="400" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="300">
+            <Label>Вход в систему</Label>
+            
+            <Separator/>
+
+            <TextBlock>Логин</TextBlock>
+            <TextBox Text="{Binding User.Login}"/>
+
+            <TextBlock Margin="0 10 0 0">Пароль</TextBlock>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="TBPassword" Text="{Binding User.Password}">
+                    <TextBox.Style>
+                        <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=BtnShowPassword, Path=IsPressed}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+
+                <PasswordBox x:Name="PBPassword" PasswordChanged="PBPassword_PasswordChanged">
+                    <PasswordBox.Style>
+                        <Style TargetType="PasswordBox" BasedOn="{StaticResource {x:Type PasswordBox}}">
+                            <Setter Property="Visibility" Value="Visible"/>
+
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=BtnShowPassword, Path=IsPressed}" Value="True">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </PasswordBox.Style>
+                </PasswordBox>
+
+                <Button Grid.Column="1" x:Name="BtnShowPassword">
+                    Показать
+                </Button>
+            </Grid>
+
+            <Button x:Name="BtnLogIn" Click="BtnLogIn_Click" Margin="0 10 0 0">Войти</Button>
+        </StackPanel>
+    </Grid>
+</Window>
