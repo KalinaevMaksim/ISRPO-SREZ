@@ -1,0 +1,31 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "3a03a74e-3b06-48a0-8a83-6ef6a58b9f04": {
+      "ProjectGuid": "3a03a74e-3b06-48a0-8a83-6ef6a58b9f04",
+      "DisplayName": "ISPRO-SREZ-1-DLL",
+      "ColorIndex": 0
+    },
+    "c84f7689-e254-4386-a1aa-9f2fb3d1330a": {
+      "ProjectGuid": "c84f7689-e254-4386-a1aa-9f2fb3d1330a",
+      "DisplayName": "VIN_LIB",
+      "ColorIndex": 1
+    },
+    "9a0bcb36-00ce-4d84-a3cf-8de26fed0077": {
+      "ProjectGuid": "9a0bcb36-00ce-4d84-a3cf-8de26fed0077",
+      "DisplayName": "REG_MARK_LIB",
+      "ColorIndex": 2
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Прочие файлы",
+      "ColorIndex": -1
+    },
+    "d99288e0-8121-48cf-a701-4e9efd88cf64": {
+      "ProjectGuid": "d99288e0-8121-48cf-a701-4e9efd88cf64",
+      "DisplayName": "UnitTestProject",
+      "ColorIndex": 3
+    }
+  },
+  "NextColorIndex": 4
+}

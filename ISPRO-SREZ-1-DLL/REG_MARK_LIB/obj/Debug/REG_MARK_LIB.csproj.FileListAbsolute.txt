@@ -1,0 +1,5 @@
+C:\Users\Пользователь\Documents\ISPRO-SREZ-1\ISPRO-SREZ-1-DLL\REG_MARK_LIB\bin\Debug\REG_MARK_LIB.dll
+C:\Users\Пользователь\Documents\ISPRO-SREZ-1\ISPRO-SREZ-1-DLL\REG_MARK_LIB\bin\Debug\REG_MARK_LIB.pdb
+C:\Users\Пользователь\Documents\ISPRO-SREZ-1\ISPRO-SREZ-1-DLL\REG_MARK_LIB\obj\Debug\REG_MARK_LIB.csproj.CoreCompileInputs.cache
+C:\Users\Пользователь\Documents\ISPRO-SREZ-1\ISPRO-SREZ-1-DLL\REG_MARK_LIB\obj\Debug\REG_MARK_LIB.dll
+C:\Users\Пользователь\Documents\ISPRO-SREZ-1\ISPRO-SREZ-1-DLL\REG_MARK_LIB\obj\Debug\REG_MARK_LIB.pdb

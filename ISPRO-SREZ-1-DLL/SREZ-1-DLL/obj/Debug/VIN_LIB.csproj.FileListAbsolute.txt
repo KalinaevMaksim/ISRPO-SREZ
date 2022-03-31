@@ -1,0 +1,6 @@
+C:\Users\Пользователь\Documents\ISPRO-SREZ-1\ISPRO-SREZ-1-DLL\SREZ-1-DLL\bin\Debug\VIN_LIB.dll
+C:\Users\Пользователь\Documents\ISPRO-SREZ-1\ISPRO-SREZ-1-DLL\SREZ-1-DLL\bin\Debug\VIN_LIB.pdb
+C:\Users\Пользователь\Documents\ISPRO-SREZ-1\ISPRO-SREZ-1-DLL\SREZ-1-DLL\obj\Debug\VIN_LIB.csproj.AssemblyReference.cache
+C:\Users\Пользователь\Documents\ISPRO-SREZ-1\ISPRO-SREZ-1-DLL\SREZ-1-DLL\obj\Debug\VIN_LIB.csproj.CoreCompileInputs.cache
+C:\Users\Пользователь\Documents\ISPRO-SREZ-1\ISPRO-SREZ-1-DLL\SREZ-1-DLL\obj\Debug\VIN_LIB.dll
+C:\Users\Пользователь\Documents\ISPRO-SREZ-1\ISPRO-SREZ-1-DLL\SREZ-1-DLL\obj\Debug\VIN_LIB.pdb
