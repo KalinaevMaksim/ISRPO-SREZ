@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace VIN_LIB
@@ -188,20 +189,27 @@ namespace VIN_LIB
 
         public string GetVINCountry(string vin)
         {
-            Dictionary<string, string> dictionary = _countries.Where(c => c.Key[0] == vin[0])
-                .ToDictionary(x => x.Key, x => x.Value);
-
-            foreach (var item in dictionary)
+            try
             {
-                string[] codesCountries = item.Key.Split('–');
+                Dictionary<string, string> dictionary = _countries.Where(c => c.Key[0] == vin[0])
+                    .ToDictionary(x => x.Key, x => x.Value);
 
-                string codeCountry = vin.Substring(0, 2);
-                if (codeCountry == codesCountries[0] ||
-                    codeCountry == codesCountries[1] ||
-                    (int)codeCountry[1] < (int)codesCountries[1][1])
+                foreach (var item in dictionary)
                 {
-                    return item.Value;
+                    string[] codesCountries = item.Key.Split('–');
+
+                    string codeCountry = vin.Substring(0, 2);
+                    if (codeCountry == codesCountries[0] ||
+                        codeCountry == codesCountries[1] ||
+                        (int)codeCountry[1] < (int)codesCountries[1][1])
+                    {
+                        return item.Value;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
             }
 
             return "";
@@ -210,16 +218,22 @@ namespace VIN_LIB
         public int GetTransportYear(string vin)
         {
             int charCode = (int)vin[10], result = 0;
-
-            Dictionary<bool, int> possibleResults = new Dictionary<bool, int>()
+            try
             {
-                [char.IsDigit(vin[6]) && char.IsDigit(vin[10])] = 2001 - 49 + charCode,
-                [char.IsDigit(vin[6]) && !char.IsDigit(vin[10])] = 1980 - 65 + charCode,
-                [!char.IsDigit(vin[6]) && char.IsDigit(vin[10])] = 2031 - 49 + charCode,
-                [!char.IsDigit(vin[6]) && !char.IsDigit(vin[10])] = 2010 - 65 + charCode,
-            };
+                Dictionary<bool, int> possibleResults = new Dictionary<bool, int>()
+                {
+                    [char.IsDigit(vin[6]) && char.IsDigit(vin[10])] = 2001 - 49 + charCode,
+                    [char.IsDigit(vin[6]) && !char.IsDigit(vin[10])] = 1980 - 65 + charCode,
+                    [!char.IsDigit(vin[6]) && char.IsDigit(vin[10])] = 2031 - 49 + charCode,
+                    [!char.IsDigit(vin[6]) && !char.IsDigit(vin[10])] = 2010 - 65 + charCode,
+                };
 
-            result = possibleResults[true];
+                result = possibleResults[true];
+            }
+            catch (Exception)
+            {
+
+            }
 
             return result;
         }
